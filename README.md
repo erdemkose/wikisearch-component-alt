@@ -1,4 +1,4 @@
-# wikimedia
+# WikiSearch Widget
 
 ## Project setup
 ```
