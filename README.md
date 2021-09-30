@@ -1,4 +1,4 @@
-# WikiSearch Widget
+# WikiSearch Component - Alternative
 
 ## Project setup
 ```
