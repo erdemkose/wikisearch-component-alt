@@ -1,18 +1,18 @@
 <template>
   <div>
-
     <div v-if="loading">Loading...</div>
 
-    <WikiSearchResponse v-if="!loading"
-        :language="language"
-        :footerMsg="`Search for pages containing ${query}`"
-        :searchResponse="searchResponse"
+    <WikiSearchPageList v-if="!loading"
+      :pages="pages"
+      :language="language"
+      :footerMsg="`Search for pages containing ${query}`"
     />
   </div>
 </template>
 
 <script>
-import WikiSearchResponse from "@/components/WikiSearchResponse";
+import WikiSearchPageList from "@/components/WikiSearchPageList";
+
 export default {
   name: "WikiSearchWidget",
   methods: {
@@ -20,8 +20,8 @@ export default {
       this.loading = true
 
       fetch(this.endpoint)
-          .then(async response => await response.json())
-          .then(data => this.searchResponse = data.pages)
+          .then(response => response.json())
+          .then(data => this.pages = data.pages)
 
       this.loading = false
     }
@@ -35,17 +35,15 @@ export default {
     let encodedQuery = encodeURIComponent(this.query)
     return {
       loading: false,
-      searchResponse: [],
+      pages: [],
       endpoint: `https://${this.language}.wikipedia.org/w/rest.php/v1/search/title?q=${encodedQuery}&limit=${this.limit}`,
     }
   },
   mounted() {
     this.searchWiki()
   },
-  components: {WikiSearchResponse}
+  components: {
+    WikiSearchPageList,
+  },
 }
 </script>
-
-<style scoped>
-
-</style>
