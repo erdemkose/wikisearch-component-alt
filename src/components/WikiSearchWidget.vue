@@ -22,6 +22,10 @@ export default {
       fetch(this.endpoint)
           .then(response => response.json())
           .then(data => this.pages = data.pages)
+          .catch(error => {
+            this.pages = []
+            console.error('Error:', error);
+          })
 
       this.loading = false
     }
